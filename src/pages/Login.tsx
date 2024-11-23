@@ -1,58 +1,90 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import { loginUser } from "../apis/server";
+import { Input } from "@chakra-ui/react";
+import { IUserAuth } from "./Register";
+import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
+import { toastOptions } from "../components/ui/toastOptions";
 
 const Login = () => {
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    let res = await loginUser({
-      data: { email: "santhosh@gmail.com", password: "admin@123" },
-    });
-    if (res.status === 200) {
-      let data = await res.json();
-      setToken(data.token);
-      navigate("/", { replace: true });
+
+  const [loginData, setLoginData] = useState<IUserAuth>({
+    email: "",
+    password: ""
+  })
+
+  const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>,type:string) => {
+    setLoginData((c) => ({
+      ...c,
+      [type]:e.target.value as string
+    }))
+  },[loginData])
+
+
+
+  const handleLogin = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (loginData.email.trim().length != 0 && loginData.password.trim().length != 0) {
+      let res = await loginUser({
+        data: {...loginData},
+      });
+      if (res.status === 200) {
+        let data = await res.json();
+        setToken(data.token);
+        navigate("/", { replace: true });
+      }else{
+        toast.error("Unable to login, please verify credentials", toastOptions)
+      }
     }
-  };
+  }, [loginData,navigate,setToken,loginUser])
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">
-          Login
+          Login to Jeera
         </h2>
 
         <div className="mx-auto max-w-lg rounded-lg border">
-          <div className="flex flex-col gap-4 p-4 md:p-8">
+          <form className="flex flex-col gap-4 p-4 md:p-8" onSubmit={handleLogin}>
             <div>
               <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
                 Email
               </label>
-              <input
-                name="email"
+              <Input
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-              />
+                placeholder="Enter your email"
+                name="email"
+                onChange={(e:React.ChangeEvent<HTMLInputElement>) => onInputChange(e,"email")}
+
+                />
             </div>
 
             <div>
               <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
                 Password
               </label>
-              <input
-                name="password"
+              <Input
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-              />
+                placeholder="Enter your email"
+                name="password"
+                type="password"
+                onChange={(e:React.ChangeEvent<HTMLInputElement>) => onInputChange(e,"password")}
+
+                />
             </div>
 
             <button
-              onClick={handleLogin}
+            type="submit"
               className="block rounded-lg bg-gray-800 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-700 focus-visible:ring active:bg-gray-600 md:text-base"
             >
               Log in
             </button>
-          </div>
+          </form>
 
           <div className="flex items-center justify-center bg-gray-100 p-4">
             <p className="text-center text-sm text-gray-500">
