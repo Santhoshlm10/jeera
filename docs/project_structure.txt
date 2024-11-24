@@ -22,6 +22,15 @@ Tables in detail
    This  table has basic details for the user like, email, username, profile picture etc.
    tasks or any stories for a particular user will be linked to the user_id
 
+   columns
+   userId
+   username
+   email
+   role
+   createdAt
+   updatedAt
+   
+
 2. projects
    
 

@@ -4,6 +4,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Users from "../pages/Users";
+import Workflows from "../pages/Workflows";
+import Projects from "../pages/Projects";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -16,14 +19,20 @@ const Routes = () => {
         {
           path: "/",
           element: <Home />,
-        },
-        {
-          path: "/profile",
-          element: <div>User Profile</div>,
-        },
-        {
-          path: "/logout",
-          element: <div>Logout</div>,
+          children: [
+            {
+              path: "users",
+              element: <Users />,
+            },
+            {
+              path: "workflows",
+              element: <Workflows />,
+            },
+            {
+              path: "projects",
+              element: <Projects />,
+            },
+          ],
         },
       ],
     },

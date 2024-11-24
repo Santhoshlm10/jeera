@@ -5,9 +5,11 @@ import { Input } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { toastOptions } from "../components/ui/toastOptions";
+import AppLogo from "./../assets/app_logo.svg"
 
 
 export interface IUserAuth {
+  username?: string;
   email: string;
   password: string
 }
@@ -20,7 +22,8 @@ const Register = () => {
 
   const [registerData, setRegisterData] = useState<IUserAuth>({
     email: "",
-    password: ""
+    password: "",
+    username:""
   })
 
   const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>,type:string) => {
@@ -51,12 +54,31 @@ const Register = () => {
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">
-          Register to Jeera
-        </h2>
+      <div className="flex justify-center m-12">
+          <div className="flex flex-row gap-2 items-center">
+            <img src={AppLogo} alt="App Logo" className="h-10 w-10" />
+            <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
+              Register to Jeera
+            </h2>
+          </div>
+        </div>
 
         <div className="mx-auto max-w-lg rounded-lg border">
           <form className="flex flex-col gap-4 p-4 md:p-8" onSubmit={handleRegisterUser}>
+
+          <div>
+              <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+                Username
+              </label>
+              <Input
+                className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+                placeholder="Enter username"
+                name="username"
+                required
+                onChange={(e:React.ChangeEvent<HTMLInputElement>) => onInputChange(e,"username")}
+              />
+            </div>
+
             <div>
               <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
                 Email
@@ -66,6 +88,7 @@ const Register = () => {
                 placeholder="Enter your email"
                 name="email"
                 required
+                type="email"
                 onChange={(e:React.ChangeEvent<HTMLInputElement>) => onInputChange(e,"email")}
               />
             </div>
@@ -76,7 +99,7 @@ const Register = () => {
               </label>
               <Input
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-                placeholder="Enter your email"
+                placeholder="Enter your password"
                 name="password"
                 type="password"
                 required
