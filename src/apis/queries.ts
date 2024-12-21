@@ -14,7 +14,11 @@ class SQLinkAPIsClass {
      * 
      */
     async getDataFromSQL(tableName:string,queryParameters:string){
-        let q = await fetch(`${BASE_URL}/${tableName}/read?${queryParameters}`)
+        let q = await fetch(`${BASE_URL}/${tableName}/read?${queryParameters}`,{
+            headers:{
+                Authorization: ""
+            }
+        })
         let q_res = await q.json()
         return q_res
     }
