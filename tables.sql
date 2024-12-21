@@ -1,5 +1,5 @@
 -- users table
-CREATE TABLE jeera_uses (
+CREATE TABLE jeera_users (
   userId int NOT NULL AUTO_INCREMENT,
   email varchar(255) NOT NULL,
   username varchar(255) NOT NULL,

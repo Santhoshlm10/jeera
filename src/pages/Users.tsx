@@ -1,13 +1,6 @@
-import TableView from "../components/ui/TableView";
+import UsersComponent from "../components/users";
 
 const Users = () => {
-    return (
-        <div>
-            {/* <TableView
-                columns={[{name:"Name"}]}
-                items={}
-            /> */}
-        </div>
-    )
-}
+  return <UsersComponent/>
+};
 export default Users;
