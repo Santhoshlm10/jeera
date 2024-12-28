@@ -4,7 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Users from "../pages/Users";
+import Users from "../pages/Users/Users";
 import Workflows from "../pages/Workflows";
 import Projects from "../pages/Projects";
 

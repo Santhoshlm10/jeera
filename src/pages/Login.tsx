@@ -37,7 +37,7 @@ const Login = () => {
       if (res.status === 200) {
         let data = await res.json();
         setToken(data.token);
-        localStorage.setItem("email",loginData.email)
+        localStorage.setItem("userInfo",loginData.email)
         navigate("/", { replace: true });
       } else {
         toast.error("Unable to login, please verify credentials", toastOptions)

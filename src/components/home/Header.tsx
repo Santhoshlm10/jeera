@@ -21,8 +21,11 @@ export const Header = () => {
   );
 
   const onLogoutClick = useCallback(async () => {
+    let res = confirm("Are you sure you want to logout?");
+    if(res){
     await localStorage.clear();
     window.location.reload();
+    }
   }, []);
 
   return (
